@@ -1,6 +1,8 @@
 package com.bank.onboarding.onboarding.infrastructure.persistence.jpa;
 
+import com.bank.onboarding.onboarding.domain.model.valueobject.CustomerStatus;
 import com.bank.onboarding.onboarding.domain.model.valueobject.DocumentType;
+import java.time.OffsetDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,6 +28,13 @@ public class CustomerEntity {
 
 	@Column(nullable = false)
 	private String email;
+
+	@Column(nullable = false)
+	private OffsetDateTime registeredAt;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private CustomerStatus status;
 
 	public CustomerEntity() {
 	}
@@ -68,5 +77,21 @@ public class CustomerEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public OffsetDateTime getRegisteredAt() {
+		return registeredAt;
+	}
+
+	public void setRegisteredAt(OffsetDateTime registeredAt) {
+		this.registeredAt = registeredAt;
+	}
+
+	public CustomerStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(CustomerStatus status) {
+		this.status = status;
 	}
 }

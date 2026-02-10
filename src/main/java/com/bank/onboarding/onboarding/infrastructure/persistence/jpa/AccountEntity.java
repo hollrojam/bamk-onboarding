@@ -1,6 +1,9 @@
 package com.bank.onboarding.onboarding.infrastructure.persistence.jpa;
 
 import com.bank.onboarding.onboarding.domain.model.valueobject.AccountStatus;
+import com.bank.onboarding.onboarding.domain.model.valueobject.AccountType;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,8 +20,18 @@ public class AccountEntity {
 	@Column(nullable = false)
 	private String customerId;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String accountNumber;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private AccountType type;
+
+	@Column(nullable = false)
+	private BigDecimal balance;
+
+	@Column(nullable = false)
+	private OffsetDateTime openedAt;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -49,6 +62,30 @@ public class AccountEntity {
 
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
+	}
+
+	public AccountType getType() {
+		return type;
+	}
+
+	public void setType(AccountType type) {
+		this.type = type;
+	}
+
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
+
+	public OffsetDateTime getOpenedAt() {
+		return openedAt;
+	}
+
+	public void setOpenedAt(OffsetDateTime openedAt) {
+		this.openedAt = openedAt;
 	}
 
 	public AccountStatus getStatus() {

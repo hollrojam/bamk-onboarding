@@ -54,6 +54,8 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
 		entity.setDocumentNumber(customer.getDocumentNumber().value());
 		entity.setFullName(customer.getFullName());
 		entity.setEmail(customer.getEmail().value());
+		entity.setRegisteredAt(customer.getRegisteredAt());
+		entity.setStatus(customer.getStatus());
 		return entity;
 	}
 
@@ -63,7 +65,9 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
 				entity.getDocumentType(),
 				DocumentNumber.of(entity.getDocumentNumber()),
 				entity.getFullName(),
-				Email.of(entity.getEmail())
+				Email.of(entity.getEmail()),
+				entity.getRegisteredAt(),
+				entity.getStatus()
 		);
 	}
 }

@@ -6,7 +6,9 @@ import com.bank.onboarding.onboarding.domain.model.valueobject.DocumentNumber;
 import com.bank.onboarding.onboarding.domain.model.valueobject.Email;
 import com.bank.onboarding.onboarding.domain.port.repository.CustomerRepository;
 import com.bank.onboarding.onboarding.infrastructure.persistence.jpa.CustomerEntity;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -36,6 +38,13 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
 	@Override
 	public Optional<Customer> findByEmail(Email email) {
 		return jpaCustomerRepository.findByEmail(email.value()).map(this::toDomain);
+	}
+
+	@Override
+	public List<Customer> findAll() {
+		return jpaCustomerRepository.findAll().stream()
+				.map(this::toDomain)
+				.collect(Collectors.toList());
 	}
 
 	private CustomerEntity toEntity(Customer customer) {

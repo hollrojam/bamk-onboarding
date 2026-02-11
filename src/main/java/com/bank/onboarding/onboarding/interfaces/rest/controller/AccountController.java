@@ -7,6 +7,7 @@ import com.bank.onboarding.onboarding.application.usecase.GetAccountsByCustomerU
 import com.bank.onboarding.onboarding.interfaces.rest.dto.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/accounts")
+@RequiredArgsConstructor
 public class AccountController {
 	private final CreateAccountUseCase createAccountUseCase;
 	private final GetAccountsByCustomerUseCase getAccountsByCustomerUseCase;
-
-	public AccountController(CreateAccountUseCase createAccountUseCase, GetAccountsByCustomerUseCase getAccountsByCustomerUseCase) {
-		this.createAccountUseCase = createAccountUseCase;
-		this.getAccountsByCustomerUseCase = getAccountsByCustomerUseCase;
-	}
 
 	@PostMapping
 	public ResponseEntity<ApiResponse<AccountResponse>> create(@Valid @RequestBody AccountRequest request) {

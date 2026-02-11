@@ -7,13 +7,11 @@ import com.bank.onboarding.onboarding.domain.model.aggregate.Customer;
 import com.bank.onboarding.onboarding.domain.model.valueobject.DocumentNumber;
 import com.bank.onboarding.onboarding.domain.model.valueobject.Email;
 import com.bank.onboarding.onboarding.domain.port.repository.CustomerRepository;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class CreateCustomerUseCase {
 	private final CustomerRepository customerRepository;
-
-	public CreateCustomerUseCase(CustomerRepository customerRepository) {
-		this.customerRepository = customerRepository;
-	}
 
 	public CustomerResponse execute(CustomerRequest request) {
 		DocumentNumber documentNumber = DocumentNumber.of(request.documentNumber());

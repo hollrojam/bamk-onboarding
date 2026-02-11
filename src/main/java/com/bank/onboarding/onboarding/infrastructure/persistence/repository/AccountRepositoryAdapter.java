@@ -9,15 +9,13 @@ import com.bank.onboarding.onboarding.infrastructure.persistence.jpa.AccountEnti
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class AccountRepositoryAdapter implements AccountRepository {
 	private final JpaAccountRepository jpaAccountRepository;
-
-	public AccountRepositoryAdapter(JpaAccountRepository jpaAccountRepository) {
-		this.jpaAccountRepository = jpaAccountRepository;
-	}
 
 	@Override
 	public Account save(Account account) {

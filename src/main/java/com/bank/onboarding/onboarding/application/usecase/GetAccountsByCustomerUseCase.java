@@ -8,15 +8,12 @@ import com.bank.onboarding.onboarding.domain.port.repository.AccountRepository;
 import com.bank.onboarding.onboarding.domain.port.repository.CustomerRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class GetAccountsByCustomerUseCase {
 	private final AccountRepository accountRepository;
 	private final CustomerRepository customerRepository;
-
-	public GetAccountsByCustomerUseCase(AccountRepository accountRepository, CustomerRepository customerRepository) {
-		this.accountRepository = accountRepository;
-		this.customerRepository = customerRepository;
-	}
 
 	public List<AccountResponse> execute(String customerIdValue) {
 		CustomerId customerId = CustomerId.of(customerIdValue);

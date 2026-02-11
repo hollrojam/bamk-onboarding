@@ -9,15 +9,13 @@ import com.bank.onboarding.onboarding.infrastructure.persistence.jpa.CustomerEnt
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class CustomerRepositoryAdapter implements CustomerRepository {
 	private final JpaCustomerRepository jpaCustomerRepository;
-
-	public CustomerRepositoryAdapter(JpaCustomerRepository jpaCustomerRepository) {
-		this.jpaCustomerRepository = jpaCustomerRepository;
-	}
 
 	@Override
 	public Customer save(Customer customer) {

@@ -10,17 +10,13 @@ import com.bank.onboarding.onboarding.domain.port.repository.AccountRepository;
 import com.bank.onboarding.onboarding.domain.port.repository.CustomerRepository;
 import com.bank.onboarding.onboarding.domain.service.AccountNumberGenerator;
 import java.math.BigDecimal;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class CreateAccountUseCase {
 	private final AccountRepository accountRepository;
 	private final CustomerRepository customerRepository;
 	private final AccountNumberGenerator accountNumberGenerator;
-
-	public CreateAccountUseCase(AccountRepository accountRepository, CustomerRepository customerRepository, AccountNumberGenerator accountNumberGenerator) {
-		this.accountRepository = accountRepository;
-		this.customerRepository = customerRepository;
-		this.accountNumberGenerator = accountNumberGenerator;
-	}
 
 	public AccountResponse execute(AccountRequest request) {
 		CustomerId customerId = CustomerId.of(request.customerId());

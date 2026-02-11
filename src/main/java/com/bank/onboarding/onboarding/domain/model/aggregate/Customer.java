@@ -7,7 +7,9 @@ import com.bank.onboarding.onboarding.domain.model.valueobject.DocumentType;
 import com.bank.onboarding.onboarding.domain.model.valueobject.Email;
 import java.time.OffsetDateTime;
 import java.util.Objects;
+import lombok.Getter;
 
+@Getter
 public class Customer {
 	private final CustomerId id;
 	private final DocumentType documentType;
@@ -29,34 +31,6 @@ public class Customer {
 
 	public static Customer createNew(DocumentType documentType, DocumentNumber documentNumber, String fullName, Email email) {
 		return new Customer(CustomerId.newId(), documentType, documentNumber, fullName, email, OffsetDateTime.now(), CustomerStatus.ACTIVE);
-	}
-
-	public CustomerId getId() {
-		return id;
-	}
-
-	public DocumentType getDocumentType() {
-		return documentType;
-	}
-
-	public DocumentNumber getDocumentNumber() {
-		return documentNumber;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public Email getEmail() {
-		return email;
-	}
-
-	public OffsetDateTime getRegisteredAt() {
-		return registeredAt;
-	}
-
-	public CustomerStatus getStatus() {
-		return status;
 	}
 
 	private static String requireText(String value, String field) {

@@ -9,7 +9,9 @@ import com.bank.onboarding.onboarding.domain.service.AccountNumberGenerator;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Objects;
+import lombok.Getter;
 
+@Getter
 public class Account {
 	private final AccountId id;
 	private final CustomerId customerId;
@@ -34,31 +36,4 @@ public class Account {
 		return new Account(AccountId.newId(), customerId, generator.nextAccountNumber(), type, initialBalance, OffsetDateTime.now(), AccountStatus.ACTIVE);
 	}
 
-	public AccountId getId() {
-		return id;
-	}
-
-	public CustomerId getCustomerId() {
-		return customerId;
-	}
-
-	public AccountNumber getAccountNumber() {
-		return accountNumber;
-	}
-
-	public AccountType getType() {
-		return type;
-	}
-
-	public BigDecimal getBalance() {
-		return balance;
-	}
-
-	public OffsetDateTime getOpenedAt() {
-		return openedAt;
-	}
-
-	public AccountStatus getStatus() {
-		return status;
-	}
 }

@@ -7,6 +7,7 @@ import com.bank.onboarding.onboarding.application.usecase.GetAllCustomersUseCase
 import com.bank.onboarding.onboarding.interfaces.rest.dto.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/customers")
+@RequiredArgsConstructor
 public class CustomerController {
 	private final CreateCustomerUseCase createCustomerUseCase;
 	private final GetAllCustomersUseCase getAllCustomersUseCase;
-
-	public CustomerController(CreateCustomerUseCase createCustomerUseCase, GetAllCustomersUseCase getAllCustomersUseCase) {
-		this.createCustomerUseCase = createCustomerUseCase;
-		this.getAllCustomersUseCase = getAllCustomersUseCase;
-	}
 
 	@PostMapping
 	public ResponseEntity<ApiResponse<CustomerResponse>> create(@Valid @RequestBody CustomerRequest request) {

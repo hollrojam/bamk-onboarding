@@ -1,0 +1,71 @@
+<div *ngIf="loading" class="loading">
+  <div>Cargando cuentas...</div>
+  <div class="skeleton">
+    <div class="skeleton-row" *ngFor="let _ of skeletonRows"></div>
+  </div>
+</div>
+
+<div *ngIf="!loading && accounts.length === 0" class="empty">No hay cuentas para el cliente</div>
+
+<div class="card" *ngIf="!loading && accounts.length > 0">
+  <div class="table-header">
+    <h3 class="section-title">Account List</h3>
+    <div class="sorters">
+      <button
+        class="btn-secondary"
+        type="button"
+        (click)="onSort('customer')"
+        [attr.aria-sort]="sortAria('customer')"
+      >Ordenar por cliente</button>
+      <button
+        class="btn-secondary"
+        type="button"
+        (click)="onSort('tipo')"
+        [attr.aria-sort]="sortAria('tipo')"
+      >Ordenar por tipo</button>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table" role="table" aria-label="Lista de cuentas">
+      <thead>
+        <tr role="row">
+          <th role="columnheader" scope="col">Nombre completo</th>
+          <th role="columnheader" scope="col">Tipo de cuenta</th>
+          <th role="columnheader" scope="col">Saldo</th>
+          <th role="columnheader" scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let account of sortedAccounts(); trackBy: trackByAccount" role="row" class="row">
+          <td role="cell">
+            <div class="primary">{{ customerName || "Sin cliente" }}</div>
+            <div class="secondary">{{ account.accountNumber }}</div>
+          </td>
+          <td role="cell">{{ getAccountTypeLabel(account.tipo) }}</td>
+          <td role="cell">{{ formatBalance(account.saldoActual) }}</td>
+          <td role="cell">
+            <button
+              type="button"
+              class="switch"
+              [class.on]="account.estado === 'ACTIVE'"
+              [class.off]="account.estado === 'INACTIVE'"
+              (click)="toggleStatus(account)"
+              [disabled]="isUpdating(account.accountNumber)"
+              role="switch"
+              [attr.aria-checked]="account.estado === 'ACTIVE'"
+              [attr.aria-label]="'Cambiar estado de ' + account.accountNumber + ' a ' + (account.estado === 'ACTIVE' ? 'inactivo' : 'activo')"
+            >
+              <span class="knob"></span>
+              <span class="label" aria-hidden="true">{{ statusLabel(account.estado) }}</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="skeleton" *ngIf="updatingAccountNumbers.size > 0">
+    <div class="skeleton-row" *ngFor="let _ of skeletonRows"></div>
+  </div>
+</div>

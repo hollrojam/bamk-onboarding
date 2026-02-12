@@ -1,0 +1,38 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+  <div class="grid-2">
+    <label class="field">
+      Tipo de documento
+      <select formControlName="documentType" aria-label="Tipo de documento">
+        <option *ngFor="let type of documentTypes" [value]="type">{{ type }}</option>
+      </select>
+    </label>
+
+    <label class="field">
+      Número de documento
+      <input formControlName="documentNumber" type="text" aria-label="Número de documento" />
+      <span class="error" *ngIf="form.controls.documentNumber.touched && form.controls.documentNumber.invalid">
+        Ingresa un número válido
+      </span>
+    </label>
+  </div>
+
+  <div class="grid-2">
+    <label class="field">
+      Nombre completo
+      <input formControlName="nombre" type="text" aria-label="Nombre completo" />
+      <span class="error" *ngIf="form.controls.nombre.touched && form.controls.nombre.invalid">
+        Ingresa un nombre válido
+      </span>
+    </label>
+
+    <label class="field">
+      Email
+      <input formControlName="email" type="email" aria-label="Email" />
+      <span class="error" *ngIf="form.controls.email.touched && form.controls.email.invalid">
+        Ingresa un email válido
+      </span>
+    </label>
+  </div>
+
+  <button class="btn-primary" type="submit">Crear cliente</button>
+</form>

@@ -1,0 +1,20 @@
+<div *ngIf="loading" class="loading">Cargando clientes...</div>
+
+<div *ngIf="!loading && customers.length === 0" class="empty">No hay clientes registrados</div>
+
+<ul class="list" *ngIf="!loading && customers.length > 0">
+  <li class="list-item" *ngFor="let customer of customers; trackBy: trackById">
+    <div>
+      <strong>{{ customer.nombre }}</strong>
+      <div class="muted">{{ customer.email }}</div>
+      <div class="muted">ID: {{ customer.id }}</div>
+    </div>
+    <div class="meta">
+      <span class="badge">{{ customer.estado }}</span>
+      <span class="muted">{{ customer.fechaRegistro }}</span>
+      <button class="btn-secondary" type="button" (click)="onSelect(customer.id)">
+        Usar para cuenta
+      </button>
+    </div>
+  </li>
+</ul>

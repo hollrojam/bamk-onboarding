@@ -40,7 +40,8 @@ public class CreateAccountUseCase {
 				account.getAccountNumber().value(),
 				account.getType().name(),
 				account.getBalance().toPlainString(),
-				account.getOpenedAt().toString()
+				account.getOpenedAt().toString(),
+				account.getStatus().name()
 		);
 	}
 }

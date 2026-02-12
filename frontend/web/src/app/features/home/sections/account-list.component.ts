@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, computed, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { MatSlideToggle, MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { Account, AccountStatus } from "../../../core/models/account";
 
 @Component({
   selector: "app-account-list",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatSlideToggle],
   templateUrl: "./account-list.component.html",
   styleUrl: "./account-list.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -14,7 +15,7 @@ export class AccountListComponent {
   @Input({ required: true }) accounts: Account[] = [];
   @Input() loading = false;
   @Input() customerName: string | null = null;
-  @Input() updatingAccountNumbers: Set<string> = new Set();
+  @Input() updatingAccountNumbers: Set<string> = new Set<string>();
   @Output() changeStatus = new EventEmitter<{ accountNumber: string; status: AccountStatus }>();
 
   private readonly sortKey = signal<"customer" | "tipo">("customer");
@@ -66,14 +67,16 @@ export class AccountListComponent {
     return status === "ACTIVE" ? "Activo" : "Inactivo";
   }
 
-  toggleStatus(account: Account): void {
+  onToggleChange(event: MatSlideToggleChange, account: Account): void {
     if (this.isUpdating(account.accountNumber)) {
+      event.source.checked = account.estado === "ACTIVE";
       return;
     }
-    const nextStatus: AccountStatus = account.estado === "ACTIVE" ? "INACTIVE" : "ACTIVE";
+    const nextStatus: AccountStatus = event.checked ? "ACTIVE" : "INACTIVE";
     const nextLabel = nextStatus === "ACTIVE" ? "activa" : "inactiva";
     const confirmed = window.confirm(`¿Confirmas cambiar el estado de la cuenta ${account.accountNumber} a ${nextLabel}?`);
     if (!confirmed) {
+      event.source.checked = account.estado === "ACTIVE";
       return;
     }
     this.changeStatus.emit({ accountNumber: account.accountNumber, status: nextStatus });

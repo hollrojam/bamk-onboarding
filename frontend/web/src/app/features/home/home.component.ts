@@ -109,7 +109,17 @@ export class HomeComponent {
 
   onChangeAccountStatus(payload: { accountNumber: string; status: AccountStatus }): void {
     const { accountNumber, status } = payload;
+    const currentAccount = this.accounts().find((account) => account.accountNumber === accountNumber);
+    if (!currentAccount) {
+      return;
+    }
+    const previousStatus = currentAccount.estado;
     this.message.set(null);
+    this.accounts.update((items) =>
+      items.map((account) =>
+        account.accountNumber === accountNumber ? { ...account, estado: status } : account
+      )
+    );
     this.updatingAccountNumbers.update((current) => {
       const next = new Set(current);
       next.add(accountNumber);
@@ -137,6 +147,11 @@ export class HomeComponent {
           this.message.set(updated.estado === "ACTIVE" ? "Cuenta activada" : "Cuenta desactivada");
         },
         error: () => {
+          this.accounts.update((items) =>
+            items.map((account) =>
+              account.accountNumber === accountNumber ? { ...account, estado: previousStatus } : account
+            )
+          );
           this.message.set("No se pudo actualizar el estado de la cuenta");
         }
       });

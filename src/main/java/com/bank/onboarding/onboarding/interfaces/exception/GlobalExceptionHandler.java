@@ -1,5 +1,6 @@
 package com.bank.onboarding.onboarding.interfaces.exception;
 
+import com.bank.onboarding.onboarding.domain.exception.AccountNotFoundException;
 import com.bank.onboarding.onboarding.domain.exception.CustomerNotFoundException;
 import com.bank.onboarding.onboarding.domain.exception.DuplicateAccountNumberException;
 import com.bank.onboarding.onboarding.domain.exception.DuplicateCustomerException;
@@ -33,6 +34,13 @@ public class GlobalExceptionHandler {
 		log.error("{} {}", request.getMethod(), request.getRequestURI(), ex);
 		return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.body(ApiResponse.error(ex.getMessage(), null, "CUSTOMER_NOT_FOUND"));
+	}
+
+	@ExceptionHandler(AccountNotFoundException.class)
+	public ResponseEntity<ApiResponse<Void>> handleAccountNotFound(AccountNotFoundException ex, HttpServletRequest request) {
+		log.error("{} {}", request.getMethod(), request.getRequestURI(), ex);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				.body(ApiResponse.error(ex.getMessage(), null, "ACCOUNT_NOT_FOUND"));
 	}
 
 	@ExceptionHandler(DuplicateAccountNumberException.class)
@@ -83,4 +91,3 @@ public class GlobalExceptionHandler {
 				.body(ApiResponse.error("Solicitud inválida", null, "INVALID_BODY"));
 	}
 	}
-

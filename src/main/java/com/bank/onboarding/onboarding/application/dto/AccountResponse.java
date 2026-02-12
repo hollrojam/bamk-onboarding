@@ -4,6 +4,7 @@ public record AccountResponse(
 		String accountNumber,
 		String tipo,
 		String saldoActual,
-		String fechaApertura
+		String fechaApertura,
+		String estado
 ) {
 }

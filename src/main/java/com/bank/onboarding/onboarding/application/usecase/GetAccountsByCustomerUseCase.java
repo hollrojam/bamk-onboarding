@@ -30,7 +30,8 @@ public class GetAccountsByCustomerUseCase {
 				account.getAccountNumber().value(),
 				account.getType().name(),
 				account.getBalance().toPlainString(),
-				account.getOpenedAt().toString()
+				account.getOpenedAt().toString(),
+				account.getStatus().name()
 		);
 	}
 }

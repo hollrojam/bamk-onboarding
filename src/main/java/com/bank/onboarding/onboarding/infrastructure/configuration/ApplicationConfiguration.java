@@ -4,6 +4,7 @@ import com.bank.onboarding.onboarding.application.usecase.CreateAccountUseCase;
 import com.bank.onboarding.onboarding.application.usecase.CreateCustomerUseCase;
 import com.bank.onboarding.onboarding.application.usecase.GetAccountsByCustomerUseCase;
 import com.bank.onboarding.onboarding.application.usecase.GetAllCustomersUseCase;
+import com.bank.onboarding.onboarding.application.usecase.UpdateAccountStatusUseCase;
 import com.bank.onboarding.onboarding.domain.model.valueobject.AccountNumber;
 import com.bank.onboarding.onboarding.domain.port.repository.AccountRepository;
 import com.bank.onboarding.onboarding.domain.port.repository.CustomerRepository;
@@ -37,5 +38,10 @@ public class ApplicationConfiguration {
 	@Bean
 	public GetAccountsByCustomerUseCase getAccountsByCustomerUseCase(AccountRepository accountRepository, CustomerRepository customerRepository) {
 		return new GetAccountsByCustomerUseCase(accountRepository, customerRepository);
+	}
+
+	@Bean
+	public UpdateAccountStatusUseCase updateAccountStatusUseCase(AccountRepository accountRepository) {
+		return new UpdateAccountStatusUseCase(accountRepository);
 	}
 }

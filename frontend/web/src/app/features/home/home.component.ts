@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { finalize } from "rxjs";
 import { CustomerService } from "../../core/services/customer.service";
 import { AccountService } from "../../core/services/account.service";
 import { CustomerFormComponent } from "./sections/customer-form.component";
@@ -8,7 +9,7 @@ import { CustomerListComponent } from "./sections/customer-list.component";
 import { AccountFormComponent } from "./sections/account-form.component";
 import { AccountListComponent } from "./sections/account-list.component";
 import { CreateCustomerRequest, Customer } from "../../core/models/customer";
-import { Account, CreateAccountRequest } from "../../core/models/account";
+import { Account, AccountStatus, CreateAccountRequest } from "../../core/models/account";
 
 @Component({
   selector: "app-home",
@@ -30,6 +31,14 @@ export class HomeComponent {
   lastCustomerId = signal<string | null>(null);
   selectedCustomerId = signal<string | null>(null);
   message = signal<string | null>(null);
+  updatingAccountNumbers = signal<Set<string>>(new Set());
+  selectedCustomerName = computed(() => {
+    const selectedId = this.selectedCustomerId();
+    if (!selectedId) {
+      return null;
+    }
+    return this.customers().find((customer) => customer.id === selectedId)?.nombre ?? null;
+  });
 
   constructor() {
     this.loadCustomers();
@@ -94,6 +103,41 @@ export class HomeComponent {
         error: () => {
           this.accounts.set([]);
           this.accountsLoading.set(false);
+        }
+      });
+  }
+
+  onChangeAccountStatus(payload: { accountNumber: string; status: AccountStatus }): void {
+    const { accountNumber, status } = payload;
+    this.message.set(null);
+    this.updatingAccountNumbers.update((current) => {
+      const next = new Set(current);
+      next.add(accountNumber);
+      return next;
+    });
+    this.accountService
+      .updateAccountStatus(accountNumber, status)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.updatingAccountNumbers.update((current) => {
+            const next = new Set(current);
+            next.delete(accountNumber);
+            return next;
+          });
+        })
+      )
+      .subscribe({
+        next: (updated) => {
+          this.accounts.update((items) =>
+            items.map((account) =>
+              account.accountNumber === accountNumber ? { ...account, estado: updated.estado } : account
+            )
+          );
+          this.message.set(updated.estado === "ACTIVE" ? "Cuenta activada" : "Cuenta desactivada");
+        },
+        error: () => {
+          this.message.set("No se pudo actualizar el estado de la cuenta");
         }
       });
   }

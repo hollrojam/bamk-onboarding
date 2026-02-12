@@ -27,7 +27,13 @@
     (submitAccount)="onCreateAccount($event)"
     (loadAccounts)="onLoadAccounts($event)"
   />
-  <app-account-list [accounts]="accounts()" [loading]="accountsLoading()" />
+  <app-account-list
+    [accounts]="accounts()"
+    [loading]="accountsLoading()"
+    [customerName]="selectedCustomerName()"
+    [updatingAccountNumbers]="updatingAccountNumbers()"
+    (changeStatus)="onChangeAccountStatus($event)"
+  />
 </section>
 
 <div class="card message" *ngIf="message()">

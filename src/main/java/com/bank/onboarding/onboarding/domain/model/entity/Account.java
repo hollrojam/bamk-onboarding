@@ -36,4 +36,8 @@ public class Account {
 		return new Account(AccountId.newId(), customerId, generator.nextAccountNumber(), type, initialBalance, OffsetDateTime.now(), AccountStatus.ACTIVE);
 	}
 
+	public Account withStatus(AccountStatus status) {
+		return new Account(this.id, this.customerId, this.accountNumber, this.type, this.balance, this.openedAt, status);
+	}
+
 }

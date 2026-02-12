@@ -20,7 +20,9 @@
 <section class="card accounts-section">
   <div class="accounts-header">
     <h2 class="section-title">Gestión de cuentas</h2>
-    <span class="badge" *ngIf="lastCustomerId()">Cliente: {{ lastCustomerId() }}</span>
+    @if (lastCustomerId()) {
+      <span class="badge">Cliente: {{ lastCustomerId() }}</span>
+    }
   </div>
   <app-account-form
     [customerId]="selectedCustomerId()"
@@ -36,6 +38,8 @@
   />
 </section>
 
-<div class="card message" *ngIf="message()">
-  {{ message() }}
-</div>
+@if (message()) {
+  <div class="card message">
+    {{ message() }}
+  </div>
+}

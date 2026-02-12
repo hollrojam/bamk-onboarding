@@ -58,6 +58,12 @@ tbody tr:hover {
   font-size: 12px;
 }
 
+.status-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .status-toggle {
   display: inline-flex;
   align-items: center;
@@ -67,6 +73,46 @@ tbody tr:hover {
 .status-toggle.is-loading {
   opacity: 0.6;
   pointer-events: none;
+}
+
+.status-toggle.active .mdc-switch__track {
+  background-color: var(--success) !important;
+}
+.status-toggle.active .mdc-switch__handle {
+  background-color: #ffffff !important;
+}
+.status-toggle.active:hover .mdc-switch__track,
+.status-toggle.active:focus-visible .mdc-switch__track {
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.3);
+}
+.status-toggle.inactive .mdc-switch__track {
+  background-color: var(--danger) !important;
+}
+.status-toggle.inactive .mdc-switch__handle {
+  background-color: #ffffff !important;
+}
+.status-toggle.inactive:hover .mdc-switch__track,
+.status-toggle.inactive:focus-visible .mdc-switch__track {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.status-badge.active {
+  background: var(--success);
+}
+
+.status-badge.inactive {
+  background: var(--danger);
 }
 
 .skeleton {
@@ -104,7 +150,7 @@ tbody tr:hover {
     padding: 10px;
   }
 
-  .status-toggle {
+  .status-cell {
     width: 100%;
     justify-content: center;
   }

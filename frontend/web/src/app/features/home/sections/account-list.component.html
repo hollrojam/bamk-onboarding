@@ -53,17 +53,21 @@
               <td role="cell">{{ getAccountTypeLabel(account.tipo) }}</td>
               <td role="cell">{{ formatBalance(account.saldoActual) }}</td>
               <td role="cell">
-                <mat-slide-toggle
-                  class="status-toggle"
-                  [class.is-loading]="isUpdating(account.accountNumber)"
-                  [checked]="account.estado === 'ACTIVE'"
-                  [disabled]="isUpdating(account.accountNumber)"
-                  (change)="onToggleChange($event, account)"
-                  labelPosition="after"
-                  [attr.aria-label]="'Cambiar estado de ' + account.accountNumber + ' a ' + (account.estado === 'ACTIVE' ? 'inactiva' : 'activa')"
-                >
-                  {{ statusLabel(account.estado) }}
-                </mat-slide-toggle>
+                <div class="status-cell">
+                  <mat-slide-toggle
+                    class="status-toggle"
+                    [class.active]="account.estado === 'ACTIVE'"
+                    [class.inactive]="account.estado === 'INACTIVE'"
+                    [class.is-loading]="isUpdating(account.accountNumber)"
+                    [checked]="account.estado === 'ACTIVE'"
+                    [disabled]="isUpdating(account.accountNumber)"
+                    (change)="onToggleChange($event, account)"
+                    [attr.aria-label]="'Cambiar estado de ' + account.accountNumber + ' a ' + (account.estado === 'ACTIVE' ? 'inactiva' : 'activa')"
+                  ></mat-slide-toggle>
+                  <span class="status-badge" [class.active]="account.estado === 'ACTIVE'" [class.inactive]="account.estado === 'INACTIVE'">
+                    {{ statusLabel(account.estado) }}
+                  </span>
+                </div>
               </td>
             </tr>
           }

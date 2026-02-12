@@ -1,0 +1,17 @@
+.list-header,
+.accounts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.accounts-section {
+  margin-top: 20px;
+}
+
+.message {
+  margin-top: 20px;
+  border-left: 4px solid var(--cyan);
+}

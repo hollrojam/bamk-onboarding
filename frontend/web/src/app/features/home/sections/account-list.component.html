@@ -1,0 +1,16 @@
+<div *ngIf="loading" class="loading">Cargando cuentas...</div>
+
+<div *ngIf="!loading && accounts.length === 0" class="empty">No hay cuentas para el cliente</div>
+
+<ul class="list" *ngIf="!loading && accounts.length > 0">
+  <li class="list-item" *ngFor="let account of accounts; trackBy: trackByAccount">
+    <div>
+      <strong>{{ account.accountNumber }}</strong>
+      <div class="muted">{{ account.tipo }}</div>
+    </div>
+    <div class="meta">
+      <span class="badge">{{ account.saldoActual }}</span>
+      <span class="muted">{{ account.fechaApertura }}</span>
+    </div>
+  </li>
+</ul>

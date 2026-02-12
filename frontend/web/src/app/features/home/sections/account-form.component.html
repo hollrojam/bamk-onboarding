@@ -1,0 +1,41 @@
+<div class="grid-2">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form card">
+    <h3 class="section-title">Crear cuenta</h3>
+    <label class="field">
+      Customer ID
+      <input formControlName="customerId" type="text" aria-label="Customer ID" />
+      <span class="error" *ngIf="form.controls.customerId.touched && form.controls.customerId.invalid">
+        Ingresa un customerId válido
+      </span>
+    </label>
+
+    <label class="field">
+      Tipo de cuenta
+      <select formControlName="tipo" aria-label="Tipo de cuenta">
+        <option *ngFor="let type of accountTypes" [value]="type">{{ type }}</option>
+      </select>
+    </label>
+
+    <label class="field">
+      Saldo inicial
+      <input formControlName="saldoInicial" type="number" step="0.01" aria-label="Saldo inicial" />
+      <span class="error" *ngIf="form.controls.saldoInicial.touched && form.controls.saldoInicial.invalid">
+        Mínimo 0.01
+      </span>
+    </label>
+
+    <button class="btn-primary" type="submit">Crear cuenta</button>
+  </form>
+
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="form card">
+    <h3 class="section-title">Consultar cuentas</h3>
+    <label class="field">
+      Customer ID
+      <input formControlName="customerId" type="text" aria-label="Customer ID" />
+      <span class="error" *ngIf="searchForm.controls.customerId.touched && searchForm.controls.customerId.invalid">
+        Ingresa un customerId válido
+      </span>
+    </label>
+    <button class="btn-secondary" type="submit">Cargar cuentas</button>
+  </form>
+</div>

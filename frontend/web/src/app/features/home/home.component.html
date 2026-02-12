@@ -1,0 +1,35 @@
+<section class="grid-2">
+  <div class="card">
+    <h2 class="section-title">Crear cliente</h2>
+    <app-customer-form (submitCustomer)="onCreateCustomer($event)" />
+  </div>
+
+  <div class="card">
+    <div class="list-header">
+      <h2 class="section-title">Lista de clientes</h2>
+      <button class="btn-secondary" type="button" (click)="onRefreshCustomers()">Actualizar</button>
+    </div>
+    <app-customer-list
+      [customers]="customers()"
+      [loading]="customersLoading()"
+      (selectCustomer)="onSelectCustomer($event)"
+    />
+  </div>
+</section>
+
+<section class="card accounts-section">
+  <div class="accounts-header">
+    <h2 class="section-title">Gestión de cuentas</h2>
+    <span class="badge" *ngIf="lastCustomerId()">Cliente: {{ lastCustomerId() }}</span>
+  </div>
+  <app-account-form
+    [customerId]="selectedCustomerId()"
+    (submitAccount)="onCreateAccount($event)"
+    (loadAccounts)="onLoadAccounts($event)"
+  />
+  <app-account-list [accounts]="accounts()" [loading]="accountsLoading()" />
+</section>
+
+<div class="card message" *ngIf="message()">
+  {{ message() }}
+</div>
